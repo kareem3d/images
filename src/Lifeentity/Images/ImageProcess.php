@@ -98,10 +98,12 @@ class ImageProcess {
     {
         foreach($this->operations as $methodName => $params)
         {
-            // Else if method exists in the intervention image class then use it
-            if(method_exists($image, $methodName))
-            {
+            try{
+                // Try to call this method on the image
                 call_user_func_array(array($image, $methodName), $this->decodeParams($params));
+
+            }catch(\Exception $e) {
+                continue;
             }
         }
 
